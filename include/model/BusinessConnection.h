@@ -42,7 +42,6 @@ class BusinessConnection {
     Price transport_costs = Price(0.0);
     Ratio demand_fulfill_history_ = Ratio(1.0);
     Time time_;
-    OpenMPLock seller_business_connections_lock;
     std::unique_ptr<TransportChainLink> first_transport_link;
 
   public:
@@ -60,8 +59,6 @@ class BusinessConnection {
     const Demand& last_demand_request_D(const PurchasingManager* const caller = nullptr) const;
 
     inline const Flow& initial_flow_Z_star() const { return initial_flow_Z_star_; }
-
-    void initial_flow_Z_star(const Flow& new_initial_flow_Z_star);
 
     inline void invalidate_buyer() { buyer = nullptr; }
 

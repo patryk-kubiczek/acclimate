@@ -113,9 +113,6 @@ class ArrayOutput : public Output {
     void event(
         EventType type, const Sector* sector_from, const Region* region_from, const Sector* sector_to, const Region* region_to, FloatType value) override;
     void initialize() override;
-    const typename ArrayOutput::Variable& get_variable(const hstring& fullname) const;
-
-    const std::vector<Event>& get_events() const { return events; }
 };
 }  // namespace acclimate
 

@@ -49,11 +49,6 @@ inline const Firm* EconomicAgent::as_firm() const {
     return nullptr;
 }
 
-inline const Consumer* EconomicAgent::as_consumer() const {
-    assert(type == Type::CONSUMER);
-    return nullptr;
-}
-
 Storage* EconomicAgent::find_input_storage(const std::string& sector_name) const {
     for (const auto& is : input_storages) {
         if (is->sector->id() == sector_name) {

@@ -33,11 +33,6 @@ namespace acclimate {
 GeoLocation::GeoLocation(Model* const model_m, TransportDelay delay_p, GeoLocation::Type type_p, std::string id_p)
     : GeoEntity(model_m, delay_p, GeoEntity::Type::LOCATION), type(type_p), id_m(std::move(id_p)) {}
 
-void GeoLocation::remove_connection(const GeoConnection* connection) {
-    auto it = std::find_if(connections.begin(), connections.end(), [connection](const std::shared_ptr<GeoConnection>& it) { return it.get() == connection; });
-    connections.erase(it);
-}
-
 GeoLocation::~GeoLocation() {
     for (auto& connection : connections) {
         connection->invalidate_location(this);

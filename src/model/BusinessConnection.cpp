@@ -225,9 +225,4 @@ const Demand& BusinessConnection::last_demand_request_D(const PurchasingManager*
     return last_demand_request_D_;
 }
 
-void BusinessConnection::initial_flow_Z_star(const Flow& new_initial_flow_Z_star) {
-    assertstep(INVESTMENT);
-    initial_flow_Z_star_ = new_initial_flow_Z_star;
-}
-
 }  // namespace acclimate

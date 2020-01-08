@@ -64,18 +64,12 @@ class Firm : public EconomicAgent {
     inline Flow forced_initial_production_lambda_X_star() const { return round(initial_production_X_star_ * forcing_); }
 
     Flow maximal_production_beta_X_star() const;
-    Flow forced_maximal_production_lambda_beta_X_star() const;
-
-    inline const FlowQuantity& initial_production_quantity_X_star() const { return initial_production_X_star_.get_quantity(); }
 
     inline FlowQuantity forced_initial_production_quantity_lambda_X_star() const { return round(initial_production_X_star_.get_quantity() * forcing_); }
 
     inline FloatType forced_initial_production_quantity_lambda_X_star_float() const { return to_float(initial_production_X_star_.get_quantity() * forcing_); }
 
-    FlowQuantity maximal_production_quantity_beta_X_star() const;
-    FloatType maximal_production_quantity_beta_X_star_float() const;
     FlowQuantity forced_maximal_production_quantity_lambda_beta_X_star() const;
-    FloatType forced_maximal_production_quantity_lambda_beta_X_star_float() const;
 
     inline Flow direct_loss() const {
         return Flow(round(initial_production_X_star_.get_quantity() * Forcing(1.0 - forcing_)),

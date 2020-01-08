@@ -97,24 +97,6 @@ Flow PurchasingManager::get_transport_flow() const {
     return res;
 }
 
-Flow PurchasingManager::get_disequilibrium() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    Flow res = Flow(0.0);
-    for (const auto& bc : business_connections) {
-        res.add_possibly_negative(bc->get_disequilibrium());
-    }
-    return res;
-}
-
-FloatType PurchasingManager::get_stddeviation() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    FloatType res = 0.0;
-    for (const auto& bc : business_connections) {
-        res += bc->get_stddeviation();
-    }
-    return res;
-}
-
 Flow PurchasingManager::get_sum_of_last_shipments() const {
     assertstepnot(CONSUMPTION_AND_PRODUCTION);
     Flow res = Flow(0.0);
@@ -140,8 +122,6 @@ const Demand& PurchasingManager::demand_D(const EconomicAgent* const caller) con
     }
     return demand_D_;
 }
-
-const Demand& PurchasingManager::initial_demand_D_star() const { return storage->initial_input_flow_I_star(); }
 
 Model* PurchasingManager::model() const { return storage->model(); }
 
@@ -226,8 +206,6 @@ inline FloatType PurchasingManager::unscaled_objective(FloatType x) const { retu
 inline FloatType PurchasingManager::partial_objective_scaled_objective() const { return to_float(storage->initial_used_flow_U_star().get_quantity()); }
 
 inline FloatType PurchasingManager::scaled_use(FloatType use) const { return use / partial_use_scaled_use(); }
-
-inline FloatType PurchasingManager::unscaled_use(FloatType x) const { return x * partial_use_scaled_use(); }
 
 inline FloatType PurchasingManager::partial_use_scaled_use() const { return to_float(storage->initial_used_flow_U_star().get_quantity()); }
 

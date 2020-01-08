@@ -60,9 +60,6 @@ class Sector {
 
   public:
     const Demand& total_demand_D() const;
-
-    inline const Demand& last_total_production_X() const { return last_total_production_X_m; }
-
     const Demand& total_production_X() const;
 
     inline const Parameters::SectorParameters& parameters() const { return parameters_m; }

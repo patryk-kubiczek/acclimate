@@ -133,24 +133,6 @@ Sector* ModelInitializer::add_sector(const std::string& name) {
     return sector;
 }
 
-void ModelInitializer::initialize_connection(Sector* sector_from, Region* region_from, Sector* sector_to, Region* region_to, const Flow& flow) {
-    Firm* firm_from = model()->find_firm(sector_from, region_from->id());
-    if (!firm_from) {
-        firm_from = add_firm(sector_from, region_from);
-        if (!firm_from) {
-            return;
-        }
-    }
-    Firm* firm_to = model()->find_firm(sector_to, region_to->id());
-    if (!firm_to) {
-        firm_to = add_firm(sector_to, region_to);
-        if (!firm_to) {
-            return;
-        }
-    }
-    initialize_connection(firm_from, firm_to, flow);
-}
-
 void ModelInitializer::initialize_connection(Firm* firm_from, EconomicAgent* economic_agent_to, const Flow& flow) {
     if (model()->no_self_supply() && (static_cast<void*>(firm_from) == static_cast<void*>(economic_agent_to))) {
         return;

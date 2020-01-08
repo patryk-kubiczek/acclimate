@@ -61,8 +61,6 @@ const Flow& Storage::last_input_flow_I() const {
 
 Ratio Storage::get_technology_coefficient_a() const { return initial_input_flow_I_star_ / economic_agent->as_firm()->initial_production_X_star(); }
 
-Ratio Storage::get_input_share_u() const { return initial_input_flow_I_star_ / economic_agent->as_firm()->initial_total_use_U_star(); }
-
 void Storage::calc_content_S() {
     assertstep(CONSUMPTION_AND_PRODUCTION);
     assert(used_flow_U_.get_quantity() * model()->delta_t() <= content_S_.get_quantity() + current_input_flow_I().get_quantity() * model()->delta_t());

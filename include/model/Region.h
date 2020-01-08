@@ -53,7 +53,6 @@ class Region : public GeoLocation {
     std::unique_ptr<Government> government_m;
     const IntType index_m;
     Parameters::RegionParameters parameters_m;
-    OpenMPLock economic_agents_lock;
 
     struct route_hash {
         std::size_t operator()(const std::pair<IntType, typename Sector::TransportType>& p) const { return (p.first << 3) | (static_cast<IntType>(p.second)); }
@@ -67,8 +66,6 @@ class Region : public GeoLocation {
     using GeoLocation::model;
 
     Region(Model* model_p, std::string id_p, IntType index_p);
-    Region* as_region() override;
-    const Region* as_region() const override;
     const Flow& consumption_C() const;
     const Flow& import_flow_Z() const;
     const Flow& export_flow_Z() const;
@@ -90,7 +87,6 @@ class Region : public GeoLocation {
     void iterate_purchase();
     void iterate_investment();
     const GeoRoute& find_path_to(Region* region, typename Sector::TransportType transport_type) const;
-    void remove_economic_agent(EconomicAgent* economic_agent);
 };
 }  // namespace acclimate
 
