@@ -51,7 +51,7 @@ class GeoEntity {
     void set_forcing_nu(Forcing forcing_nu_p);
     void remove_transport_chain_link(TransportChainLink* transport_chain_link);
 
-    inline Model* model() const { return model_m; }
+    Model* model() const { return model_m; }
 
     virtual std::string id() const = 0;
 };

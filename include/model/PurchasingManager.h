@@ -85,14 +85,14 @@ class PurchasingManager {
   private:
     FloatType purchase_constraint(const FloatType x[], FloatType grad[], const OptimizerData* data) const;
     FloatType objective_costs(const FloatType x[], FloatType grad[], const OptimizerData* data) const;
-    inline FloatType scaled_D_r(FloatType D_r, const BusinessConnection* bc) const;
-    inline FloatType unscaled_D_r(FloatType x, const BusinessConnection* bc) const;
-    static inline FloatType partial_D_r_scaled_D_r(const BusinessConnection* bc);
-    inline FloatType scaled_objective(FloatType obj) const;
-    inline FloatType unscaled_objective(FloatType x) const;
-    inline FloatType partial_objective_scaled_objective() const;
-    inline FloatType scaled_use(FloatType use) const;
-    inline FloatType partial_use_scaled_use() const;
+    FloatType scaled_D_r(FloatType D_r, const BusinessConnection* bc) const;
+    FloatType unscaled_D_r(FloatType x, const BusinessConnection* bc) const;
+    static FloatType partial_D_r_scaled_D_r(const BusinessConnection* bc);
+    FloatType scaled_objective(FloatType obj) const;
+    FloatType unscaled_objective(FloatType x) const;
+    FloatType partial_objective_scaled_objective() const;
+    FloatType scaled_use(FloatType use) const;
+    FloatType partial_use_scaled_use() const;
     void calc_desired_purchase(const OptimizerData* data);
     FloatType n_r(FloatType D_r, const BusinessConnection* business_connection) const;
     FloatType estimate_production_extension_penalty(const BusinessConnection* bc, FloatType production_quantity_X) const;

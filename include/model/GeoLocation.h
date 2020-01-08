@@ -52,7 +52,7 @@ class GeoLocation : public GeoEntity {
 
     const GeoPoint* centroid() const { return centroid_m.get(); }
 
-    inline std::string id() const override { return id_m; }
+    std::string id() const override { return id_m; }
 };
 }  // namespace acclimate
 

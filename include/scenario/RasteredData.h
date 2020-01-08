@@ -113,9 +113,9 @@ class RasteredData {
 
     const Y y;
 
-    inline FloatType abs_x_gridsize() const { return t_x_gridsize; }
+    FloatType abs_x_gridsize() const { return t_x_gridsize; }
 
-    inline FloatType abs_y_gridsize() const { return t_y_gridsize; }
+    FloatType abs_y_gridsize() const { return t_y_gridsize; }
 
     RasteredData(std::string filename_p, const std::string& variable_name);
     virtual ~RasteredData() = default;
@@ -125,7 +125,7 @@ class RasteredData {
     bool is_compatible(const RasteredData<T2>& other) const;
     T read(FloatType x_var, FloatType y_var) const;
 
-    virtual inline std::string id() const { return "RASTER " + filename; }
+    virtual std::string id() const { return "RASTER " + filename; }
 };
 }  // namespace acclimate
 

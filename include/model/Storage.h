@@ -68,7 +68,7 @@ class Storage {
     void calc_content_S();
 
   public:
-    inline const Parameters::StorageParameters& parameters() const { return parameters_; }
+    const Parameters::StorageParameters& parameters() const { return parameters_; }
     Parameters::StorageParameters& parameters_writable();
 
   public:

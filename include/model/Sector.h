@@ -62,7 +62,7 @@ class Sector {
     const Demand& total_demand_D() const;
     const Demand& total_production_X() const;
 
-    inline const Parameters::SectorParameters& parameters() const { return parameters_m; }
+    const Parameters::SectorParameters& parameters() const { return parameters_m; }
 
     Parameters::SectorParameters& parameters_writable();
 
@@ -80,11 +80,11 @@ class Sector {
     void iterate_consumption_and_production();
     void remove_firm(Firm* firm);
 
-    inline IntType index() const { return index_m; }
+    IntType index() const { return index_m; }
 
-    inline Model* model() const { return model_m; }
+    Model* model() const { return model_m; }
 
-    inline const std::string& id() const { return id_m; }
+    const std::string& id() const { return id_m; }
 };
 }  // namespace acclimate
 

@@ -61,11 +61,11 @@ class Output {
     bool write_region_parameter(const Region* region, const settings::hstring& name);
     void write_sector_parameters(const Sector* sector, const settings::SettingsNode& parameters);
     bool write_sector_parameter(const Sector* sector, const settings::hstring& name);
-    inline void internal_write_value(const hstring& name, const Stock& v);
-    inline void internal_write_value(const hstring& name, const Flow& v);
-    inline void internal_write_value(const hstring& name, FloatType v);
+    void internal_write_value(const hstring& name, const Stock& v);
+    void internal_write_value(const hstring& name, const Flow& v);
+    void internal_write_value(const hstring& name, FloatType v);
     template<int precision_digits_p>
-    inline void internal_write_value(const hstring& name, const Type<precision_digits_p>& v, const hstring& suffix = hstring::null());
+    void internal_write_value(const hstring& name, const Type<precision_digits_p>& v, const hstring& suffix = hstring::null());
 
   protected:
     std::string settings_string;
@@ -74,7 +74,7 @@ class Output {
     std::time_t start_time;
     bool is_first_timestep() const;
     bool is_last_timestep() const;
-    inline void parameter_not_found(const std::string& name) const;
+    void parameter_not_found(const std::string& name) const;
     virtual void internal_write_header(tm* timestamp, int max_threads);
     virtual void internal_write_footer(tm* duration);
     virtual void internal_write_settings();
@@ -109,9 +109,9 @@ class Output {
 
     virtual ~Output() = default;
 
-    inline Model* model() const { return model_m; }
+    Model* model() const { return model_m; }
 
-    virtual inline std::string id() const { return "OUTPUT"; }
+    virtual std::string id() const { return "OUTPUT"; }
 };
 }  // namespace acclimate
 

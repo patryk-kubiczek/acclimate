@@ -35,8 +35,8 @@ class GeoPoint {
     GeoPoint(FloatType lon_p, FloatType lat_p);
     FloatType distance_to(const GeoPoint& other) const;
 
-    inline FloatType lon() const { return lon_; }
-    inline FloatType lat() const { return lat_; }
+    FloatType lon() const { return lon_; }
+    FloatType lat() const { return lat_; }
 };
 }  // namespace acclimate
 

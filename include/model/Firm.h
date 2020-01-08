@@ -50,38 +50,38 @@ class Firm : public EconomicAgent {
     std::unique_ptr<CapacityManager> const capacity_manager;
     std::unique_ptr<SalesManager> const sales_manager;
 
-    inline Firm* as_firm() override { return this; }
-    inline const Firm* as_firm() const override { return this; }
+    Firm* as_firm() override { return this; }
+    const Firm* as_firm() const override { return this; }
 
     const BusinessConnection* self_supply_connection() const;
     void self_supply_connection(std::shared_ptr<BusinessConnection> self_supply_connection_p);
     const Flow& production_X() const;
 
-    inline const Flow& initial_production_X_star() const { return initial_production_X_star_; }
+    const Flow& initial_production_X_star() const { return initial_production_X_star_; }
 
-    inline const Flow& initial_total_use_U_star() const { return initial_total_use_U_star_; }
+    const Flow& initial_total_use_U_star() const { return initial_total_use_U_star_; }
 
-    inline Flow forced_initial_production_lambda_X_star() const { return round(initial_production_X_star_ * forcing_); }
+    Flow forced_initial_production_lambda_X_star() const { return round(initial_production_X_star_ * forcing_); }
 
     Flow maximal_production_beta_X_star() const;
 
-    inline FlowQuantity forced_initial_production_quantity_lambda_X_star() const { return round(initial_production_X_star_.get_quantity() * forcing_); }
+    FlowQuantity forced_initial_production_quantity_lambda_X_star() const { return round(initial_production_X_star_.get_quantity() * forcing_); }
 
-    inline FloatType forced_initial_production_quantity_lambda_X_star_float() const { return to_float(initial_production_X_star_.get_quantity() * forcing_); }
+    FloatType forced_initial_production_quantity_lambda_X_star_float() const { return to_float(initial_production_X_star_.get_quantity() * forcing_); }
 
     FlowQuantity forced_maximal_production_quantity_lambda_beta_X_star() const;
 
-    inline Flow direct_loss() const {
+    Flow direct_loss() const {
         return Flow(round(initial_production_X_star_.get_quantity() * Forcing(1.0 - forcing_)),
                     production_X_.get_quantity() > 0.0 ? production_X_.get_price() : Price(0.0), true);
     }
 
-    inline Flow total_loss() const {
+    Flow total_loss() const {
         return Flow(round(initial_production_X_star_.get_quantity() - production_X_.get_quantity()),
                     production_X_.get_quantity() > 0.0 ? production_X_.get_price() : Price(0.0), true);
     }
 
-    inline FlowValue total_value_loss() const { return (initial_production_X_star_ - production_X_).get_value(); }
+    FlowValue total_value_loss() const { return (initial_production_X_star_ - production_X_).get_value(); }
 
   private:
     void produce_X();

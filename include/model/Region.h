@@ -73,11 +73,11 @@ class Region : public GeoLocation {
     Government* government();
     Government const* government() const;
 
-    inline const Parameters::RegionParameters& parameters() const { return parameters_m; }
+    const Parameters::RegionParameters& parameters() const { return parameters_m; }
     const Parameters::RegionParameters& parameters_writable() const;
     ~Region() override = default;
 
-    inline IntType index() const { return index_m; }
+    IntType index() const { return index_m; }
     void add_export_Z(const Flow& export_flow_Z_p);
     void add_import_Z(const Flow& import_flow_Z_p);
     void add_consumption_flow_Y(const Flow& consumption_flow_Y_p);

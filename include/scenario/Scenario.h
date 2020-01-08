@@ -58,9 +58,9 @@ class Scenario {
 
     virtual std::string time_units_str() const;
 
-    inline Model* model() const { return model_m; }
+    Model* model() const { return model_m; }
 
-    virtual inline std::string id() const { return "SCENARIO"; }
+    virtual std::string id() const { return "SCENARIO"; }
 };
 }  // namespace acclimate
 

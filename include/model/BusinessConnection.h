@@ -50,19 +50,19 @@ class BusinessConnection {
 
     BusinessConnection(PurchasingManager* buyer_p, SalesManager* seller_p, const Flow& initial_flow_Z_star_p);
 
-    inline const Time& time() const { return time_; }
+    const Time& time() const { return time_; }
 
-    inline void time(const Time& time_p) { time_ = time_p; }
+    void time(const Time& time_p) { time_ = time_p; }
 
     const Flow& last_shipment_Z(const SalesManager* caller = nullptr) const;
     const Flow& last_delivery_Z(const SalesManager* const caller = nullptr) const;
     const Demand& last_demand_request_D(const PurchasingManager* const caller = nullptr) const;
 
-    inline const Flow& initial_flow_Z_star() const { return initial_flow_Z_star_; }
+    const Flow& initial_flow_Z_star() const { return initial_flow_Z_star_; }
 
-    inline void invalidate_buyer() { buyer = nullptr; }
+    void invalidate_buyer() { buyer = nullptr; }
 
-    inline void invalidate_seller() { seller = nullptr; }
+    void invalidate_seller() { seller = nullptr; }
 
     std::size_t get_id(const TransportChainLink* transport_chain_link) const;
     Flow get_flow_mean() const;

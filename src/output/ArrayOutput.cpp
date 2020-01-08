@@ -40,7 +40,7 @@ void ArrayOutput::initialize() {
     regions_size = model()->regions.size();
 }
 
-inline typename ArrayOutput::Variable& ArrayOutput::create_variable(const hstring& path, const hstring& name, const hstring& suffix) {
+typename ArrayOutput::Variable& ArrayOutput::create_variable(const hstring& path, const hstring& name, const hstring& suffix) {
     const auto key = suffix ^ name ^ path;
     auto it = variables.find(key);
     if (it == variables.end()) {
@@ -69,7 +69,7 @@ void ArrayOutput::internal_write_value(const hstring& name, FloatType v, const h
     it.data[t.index] = v;
 }
 
-inline std::size_t ArrayOutput::current_index() const {
+std::size_t ArrayOutput::current_index() const {
     if (!stack.empty()) {
         return stack.back().index;
     }

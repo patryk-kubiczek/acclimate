@@ -70,7 +70,7 @@ class RasteredScenario : public ExternalScenario {
     using ExternalScenario::id;
     ~RasteredScenario() override = default;
 
-    inline const std::vector<RegionInfo>& forcings() const { return region_forcings; }
+    const std::vector<RegionInfo>& forcings() const { return region_forcings; }
 };
 }  // namespace acclimate
 

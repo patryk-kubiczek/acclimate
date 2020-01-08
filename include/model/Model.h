@@ -61,7 +61,7 @@ class Model {
     std::vector<std::pair<EconomicAgent*, std::size_t>> economic_agents;
     Run* const run_m;
 
-    inline Model* model() { return this; }
+    Model* model() { return this; }
 
   protected:
     explicit Model(Run* run_p);
@@ -69,33 +69,33 @@ class Model {
     Time stop_time_ = Time(0.0);
 
   public:
-    inline const Time& time() const { return time_; }
+    const Time& time() const { return time_; }
 
-    inline const TimeStep& timestep() const { return timestep_; }
+    const TimeStep& timestep() const { return timestep_; }
 
-    inline const Time& start_time() const { return start_time_; };
+    const Time& start_time() const { return start_time_; };
 
-    inline const Time& stop_time() const { return stop_time_; };
+    const Time& stop_time() const { return stop_time_; };
 
     bool done() const { return time() > stop_time(); };
     void switch_registers();
     void tick();
 
-    inline const Time& delta_t() const { return delta_t_; }
+    const Time& delta_t() const { return delta_t_; }
 
     void delta_t(const Time& delta_t_p);
 
-    inline const bool& no_self_supply() const { return no_self_supply_; }
+    const bool& no_self_supply() const { return no_self_supply_; }
 
     void start_time(const Time& start_time);
     void stop_time(const Time& stop_time);
     void no_self_supply(bool no_self_supply_p);
 
-    inline const unsigned char& current_register() const { return current_register_; }
+    const unsigned char& current_register() const { return current_register_; }
 
-    inline unsigned char other_register() const { return 1 - current_register_; }
+    unsigned char other_register() const { return 1 - current_register_; }
 
-    inline const Parameters::ModelParameters& parameters() const { return parameters_; }
+    const Parameters::ModelParameters& parameters() const { return parameters_; }
 
     Parameters::ModelParameters& parameters_writable();
 
@@ -117,9 +117,9 @@ class Model {
     Consumer* find_consumer(const std::string& region_name) const;
     GeoLocation* find_location(const std::string& name) const;
 
-    inline Run* run() const { return run_m; }
+    Run* run() const { return run_m; }
 
-    static inline std::string id() { return "MODEL"; }
+    static std::string id() { return "MODEL"; }
 };
 }  // namespace acclimate
 

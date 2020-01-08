@@ -29,9 +29,7 @@
 namespace acclimate {
 
 class BusinessConnection;
-
 class GeoEntity;
-
 class Model;
 
 class TransportChainLink {
@@ -59,13 +57,13 @@ class TransportChainLink {
     void push_flow_Z(const Flow& flow_Z, const FlowQuantity& initial_flow_Z_star);
     void set_forcing_nu(Forcing forcing_nu_p);
 
-    inline TransportDelay transport_delay() const { return transport_queue.size(); }
+    TransportDelay transport_delay() const { return transport_queue.size(); }
 
     Flow get_total_flow() const;
     FloatType get_passage() const;
     FlowQuantity get_flow_deficit() const;
 
-    inline void unregister_geoentity() { geo_entity = nullptr; }
+    void unregister_geoentity() { geo_entity = nullptr; }
 
     Model* model() const;
     std::string id() const;

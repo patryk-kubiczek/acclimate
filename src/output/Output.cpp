@@ -58,29 +58,29 @@ void Output::start() {
     internal_start();
 }
 
-inline void Output::parameter_not_found(const std::string& name) const {
+void Output::parameter_not_found(const std::string& name) const {
     UNUSED(name);
     if (is_first_timestep()) {
         warning("Parameter '" << name << "' unknown");
     }
 }
 
-inline void Output::internal_write_value(const hstring& name, FloatType v) { internal_write_value(name, v, hstring::null()); }
+void Output::internal_write_value(const hstring& name, FloatType v) { internal_write_value(name, v, hstring::null()); }
 
-inline void Output::internal_write_value(const hstring& name, const Stock& v) {
+void Output::internal_write_value(const hstring& name, const Stock& v) {
     internal_write_value(name, v.get_quantity(), hstring::null());
     internal_write_value(name, v.get_price(), hstring("_price"));
     internal_write_value(name, v.get_value(), hstring("_value"));
 }
 
-inline void Output::internal_write_value(const hstring& name, const Flow& v) {
+void Output::internal_write_value(const hstring& name, const Flow& v) {
     internal_write_value(name, v.get_quantity(), hstring::null());
     internal_write_value(name, v.get_price(), hstring("_price"));
     internal_write_value(name, v.get_value(), hstring("_value"));
 }
 
 template<int precision_digits_p>
-inline void Output::internal_write_value(const hstring& name, const Type<precision_digits_p>& v, const hstring& suffix) {
+void Output::internal_write_value(const hstring& name, const Type<precision_digits_p>& v, const hstring& suffix) {
     internal_write_value(name, to_float(v), suffix);
 }
 

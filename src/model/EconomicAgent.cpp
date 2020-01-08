@@ -34,17 +34,17 @@ namespace acclimate {
 
 EconomicAgent::EconomicAgent(Sector* sector_p, Region* region_p, const EconomicAgent::Type& type_p) : sector(sector_p), region(region_p), type(type_p) {}
 
-inline Firm* EconomicAgent::as_firm() {
+Firm* EconomicAgent::as_firm() {
     assert(type == Type::FIRM);
     return nullptr;
 }
 
-inline Consumer* EconomicAgent::as_consumer() {
+Consumer* EconomicAgent::as_consumer() {
     assert(type == Type::CONSUMER);
     return nullptr;
 }
 
-inline const Firm* EconomicAgent::as_firm() const {
+const Firm* EconomicAgent::as_firm() const {
     assert(type == Type::FIRM);
     return nullptr;
 }
