@@ -38,8 +38,6 @@ class Sector {
 
   public:
     enum class TransportType { AVIATION, IMMEDIATE, ROADSEA };
-    static TransportType map_transport_type(const settings::hstring& transport_type);
-    static const char* unmap_transport_type(TransportType transport_type);
 
   private:
     const IntType index_m;
@@ -51,6 +49,14 @@ class Sector {
     Flow last_total_production_X_m = Flow(0.0);
     Parameters::SectorParameters parameters_m;
     Model* const model_m;
+
+  public:
+    const Ratio upper_storage_limit_omega;
+    const Time initial_storage_fill_factor_psi;
+    const TransportType transport_type;
+    std::vector<Firm*> firms;
+
+  private:
     Sector(Model* model_p,
            std::string id_p,
            IntType index_p,
@@ -59,31 +65,20 @@ class Sector {
            TransportType transport_type_p);
 
   public:
+    static TransportType map_transport_type(const settings::hstring& transport_type);
+    static const char* unmap_transport_type(TransportType transport_type);
     const Demand& total_demand_D() const;
     const Demand& total_production_X() const;
-
     const Parameters::SectorParameters& parameters() const { return parameters_m; }
-
     Parameters::SectorParameters& parameters_writable();
-
-  public:
-    const Ratio upper_storage_limit_omega;
-    const Time initial_storage_fill_factor_psi;
-    const TransportType transport_type;
-    std::vector<Firm*> firms;
-
-  public:
     void add_demand_request_D(const Demand& demand_request_D);
     void add_production_X(const Flow& production_X);
     void add_initial_production_X(const Flow& production_X);
     void subtract_initial_production_X(const Flow& production_X);
     void iterate_consumption_and_production();
     void remove_firm(Firm* firm);
-
     IntType index() const { return index_m; }
-
     Model* model() const { return model_m; }
-
     const std::string& id() const { return id_m; }
 };
 }  // namespace acclimate

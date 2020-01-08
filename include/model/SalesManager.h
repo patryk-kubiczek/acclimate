@@ -42,29 +42,9 @@ struct SupplyParameters {
 };
 
 class SalesManager {
-  public:
-    Firm* const firm;
-    std::vector<std::shared_ptr<BusinessConnection>> business_connections;
-
-  protected:
+  private:
     Demand sum_demand_requests_D_ = Demand(0.0);
     OpenMPLock sum_demand_requests_D_lock;
-
-  public:
-    const Demand& sum_demand_requests_D() const;
-
-  public:
-    explicit SalesManager(Firm* firm_p);
-    ~SalesManager();
-    void add_demand_request_D(const Demand& demand_request_D);
-    void add_initial_demand_request_D_star(const Demand& initial_demand_request_D_star);
-    void subtract_initial_demand_request_D_star(const Demand& initial_demand_request_D_star);
-    const Flow get_transport_flow() const;
-    bool remove_business_connection(BusinessConnection* business_connection);
-    Model* model() const;
-    std::string id() const;
-
-  private:
     // For communicating certain quantities to (potential) buyers
     SupplyParameters communicated_parameters_;
     Price initial_unit_commodity_costs = Price(0.0);
@@ -74,27 +54,13 @@ class SalesManager {
     Ratio tax_ = Ratio(0.0);
     struct {
         typename std::vector<std::shared_ptr<BusinessConnection>>::iterator connection_not_served_completely;
-        Price price_cheapest_buyer_accepted_in_optimization = Price(0.0);  // Price of cheapest connection, that has been considered in the profit optimization
+        Price price_cheapest_buyer_accepted_in_optimization = Price(0.0);  // Price of cheapest connection that has been considered in the profit optimization
         Flow flow_not_served_completely = Flow(0.0);
     } supply_distribution_scenario;  // to distribute production among demand requests
 
   public:
-    const SupplyParameters& communicated_parameters() const;
-    const FlowValue& total_production_costs_C() const;
-    const FlowValue& total_revenue_R() const;
-    void impose_tax(const Ratio tax_p);
-    const FlowValue get_tax() const;
-
-  public:
-    void distribute(const Flow& _);
-    void initialize();
-    void iterate_expectation();
-    const Price get_initial_markup() const;
-    const Price get_initial_unit_variable_production_costs() const;
-    const Flow calc_production_X();
-    const FlowValue calc_production_extension_penalty_P(const FlowQuantity& production_quantity_X) const;
-    const Price calc_marginal_production_extension_penalty(const FlowQuantity& production_quantity_X) const;
-    const Price calc_marginal_production_costs(const FlowQuantity& production_quantity_X, const Price& unit_production_costs_n_c) const;
+    Firm* const firm;
+    std::vector<std::shared_ptr<BusinessConnection>> business_connections;
 
   private:
     std::tuple<Flow, Price> calc_supply_distribution_scenario(const Flow& possible_production_X_hat_p);
@@ -116,13 +82,36 @@ class SalesManager {
                                              const Price& unit_production_costs_n_c,
                                              const Price& n_min_p,
                                              const Price& precision_p) const;
-
-  public:
-    // DEBUG
-    void print_details() const;
     void print_parameters() const;
     void print_connections(typename std::vector<std::shared_ptr<BusinessConnection>>::const_iterator begin_equally_distributed,
                            typename std::vector<std::shared_ptr<BusinessConnection>>::const_iterator end_equally_distributed) const;
+
+  public:
+    explicit SalesManager(Firm* firm_p);
+    ~SalesManager();
+    const Demand& sum_demand_requests_D() const;
+    void add_demand_request_D(const Demand& demand_request_D);
+    void add_initial_demand_request_D_star(const Demand& initial_demand_request_D_star);
+    void subtract_initial_demand_request_D_star(const Demand& initial_demand_request_D_star);
+    bool remove_business_connection(BusinessConnection* business_connection);
+    const SupplyParameters& communicated_parameters() const;
+    const FlowValue& total_production_costs_C() const;
+    const FlowValue& total_revenue_R() const;
+    void impose_tax(const Ratio tax_p);
+    const FlowValue get_tax() const;
+    void distribute(const Flow& _);
+    void initialize();
+    void iterate_expectation();
+    const Price get_initial_markup() const;
+    const Price get_initial_unit_variable_production_costs() const;
+    const Flow calc_production_X();
+    const FlowValue calc_production_extension_penalty_P(const FlowQuantity& production_quantity_X) const;
+    const Price calc_marginal_production_extension_penalty(const FlowQuantity& production_quantity_X) const;
+    const Price calc_marginal_production_costs(const FlowQuantity& production_quantity_X, const Price& unit_production_costs_n_c) const;
+    Model* model() const;
+    std::string id() const;
+    // DEBUG
+    void print_details() const;
 };
 }  // namespace acclimate
 

@@ -43,40 +43,37 @@ class Region : public GeoLocation {
     friend class ModelInitializer;
 
   private:
+    struct route_hash {
+        std::size_t operator()(const std::pair<IntType, typename Sector::TransportType>& p) const { return (p.first << 3) | (static_cast<IntType>(p.second)); }
+    };
+
+  private:
     Flow export_flow_Z_[2] = {Flow(0.0), Flow(0.0)};
     OpenMPLock export_flow_Z_lock;
     Flow import_flow_Z_[2] = {Flow(0.0), Flow(0.0)};
     OpenMPLock import_flow_Z_lock;
     Flow consumption_flow_Y_[2] = {Flow(0.0), Flow(0.0)};
     OpenMPLock consumption_flow_Y_lock;
-
+    std::unordered_map<std::pair<IntType, typename Sector::TransportType>, GeoRoute, route_hash> routes;
     std::unique_ptr<Government> government_m;
     const IntType index_m;
     Parameters::RegionParameters parameters_m;
 
-    struct route_hash {
-        std::size_t operator()(const std::pair<IntType, typename Sector::TransportType>& p) const { return (p.first << 3) | (static_cast<IntType>(p.second)); }
-    };
-    std::unordered_map<std::pair<IntType, typename Sector::TransportType>, GeoRoute, route_hash> routes;
+  public:
+    using GeoLocation::connections;
+    std::vector<std::unique_ptr<EconomicAgent>> economic_agents;
 
   public:
-    std::vector<std::unique_ptr<EconomicAgent>> economic_agents;
-    using GeoLocation::connections;
-    using GeoLocation::id;
-    using GeoLocation::model;
-
     Region(Model* model_p, std::string id_p, IntType index_p);
+    ~Region() override = default;
     const Flow& consumption_C() const;
     const Flow& import_flow_Z() const;
     const Flow& export_flow_Z() const;
     void set_government(Government* government_p);
     Government* government();
     Government const* government() const;
-
     const Parameters::RegionParameters& parameters() const { return parameters_m; }
     const Parameters::RegionParameters& parameters_writable() const;
-    ~Region() override = default;
-
     IntType index() const { return index_m; }
     void add_export_Z(const Flow& export_flow_Z_p);
     void add_import_Z(const Flow& import_flow_Z_p);
@@ -87,6 +84,8 @@ class Region : public GeoLocation {
     void iterate_purchase();
     void iterate_investment();
     const GeoRoute& find_path_to(Region* region, typename Sector::TransportType transport_type) const;
+    using GeoLocation::id;
+    using GeoLocation::model;
 };
 }  // namespace acclimate
 

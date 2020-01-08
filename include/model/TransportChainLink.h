@@ -44,27 +44,25 @@ class TransportChainLink {
     std::unique_ptr<TransportChainLink> next_transport_chain_link;
     GeoEntity* geo_entity;
 
+  public:
+    const TransportDelay initial_transport_delay_tau;
+    BusinessConnection* const business_connection;
+
+  private:
     TransportChainLink(BusinessConnection* business_connection_p,
                        const TransportDelay& initial_transport_delay_tau,
                        const Flow& initial_flow_Z_star,
                        GeoEntity* geo_entity_p);
 
   public:
-    const TransportDelay initial_transport_delay_tau;
-    BusinessConnection* const business_connection;
-
     ~TransportChainLink();
     void push_flow_Z(const Flow& flow_Z, const FlowQuantity& initial_flow_Z_star);
     void set_forcing_nu(Forcing forcing_nu_p);
-
     TransportDelay transport_delay() const { return transport_queue.size(); }
-
     Flow get_total_flow() const;
     FloatType get_passage() const;
     FlowQuantity get_flow_deficit() const;
-
     void unregister_geoentity() { geo_entity = nullptr; }
-
     Model* model() const;
     std::string id() const;
 };
