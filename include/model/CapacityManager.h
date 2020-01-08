@@ -57,15 +57,14 @@ class CapacityManager {
     std::string id() const;
 
   private:
-    const Flow get_possible_production_X_hat_intern(bool consider_transport_in_production_costs, bool estimate) const;
+    Flow get_possible_production_X_hat_intern(bool consider_transport_in_production_costs, bool estimate) const;
 
   public:
-    const Flow get_possible_production_X_hat() const;
-    const Flow estimate_possible_production_X_hat() const;
-    const Flow calc_production_X();
-#ifdef DEBUG
+    Flow get_possible_production_X_hat() const;
+    Flow estimate_possible_production_X_hat() const;
+    Flow calc_production_X();
+    // DEBUG
     void print_inputs() const;
-#endif
 };
 }  // namespace acclimate
 

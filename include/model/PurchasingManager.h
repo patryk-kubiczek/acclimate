@@ -55,11 +55,11 @@ class PurchasingManager {
     const Demand& demand_D(const EconomicAgent* const caller = nullptr) const;
     explicit PurchasingManager(Storage* storage_p);
     ~PurchasingManager();
-    const FlowQuantity get_flow_deficit() const;
-    const Flow get_transport_flow() const;
-    const Flow get_disequilibrium() const;
+    FlowQuantity get_flow_deficit() const;
+    Flow get_transport_flow() const;
+    Flow get_disequilibrium() const;
     FloatType get_stddeviation() const;
-    const Flow get_sum_of_last_shipments() const;
+    Flow get_sum_of_last_shipments() const;
     void iterate_consumption_and_production();
     bool remove_business_connection(const BusinessConnection* business_connection);
     const Demand& initial_demand_D_star() const;
@@ -75,7 +75,7 @@ class PurchasingManager {
 
   public:
     FloatType optimized_value() const;
-    const Demand storage_demand() const;
+    Demand storage_demand() const;
     const Demand& purchase() const;
     const FlowValue& expected_costs(const EconomicAgent* const caller = nullptr) const;
     const FlowValue& total_transport_penalty() const;
@@ -91,7 +91,7 @@ class PurchasingManager {
     FloatType objective_costs(const FloatType x[], FloatType grad[], const OptimizerData* data) const;
     inline FloatType scaled_D_r(FloatType D_r, const BusinessConnection* bc) const;
     inline FloatType unscaled_D_r(FloatType x, const BusinessConnection* bc) const;
-    inline FloatType partial_D_r_scaled_D_r(const BusinessConnection* bc) const;
+    static inline FloatType partial_D_r_scaled_D_r(const BusinessConnection* bc);
     inline FloatType scaled_objective(FloatType obj) const;
     inline FloatType unscaled_objective(FloatType x) const;
     inline FloatType partial_objective_scaled_objective() const;
@@ -109,7 +109,7 @@ class PurchasingManager {
     FloatType grad_n_r(FloatType D_r, const BusinessConnection* business_connection) const;
     FloatType grad_expected_average_price_E_n_r(FloatType D_r, const BusinessConnection* business_connection) const;
     FloatType partial_D_r_transport_penalty(FloatType D_r, const BusinessConnection* business_connection) const;
-    static const FlowQuantity calc_analytical_approximation_X_max(const BusinessConnection* bc);
+    static FlowQuantity calc_analytical_approximation_X_max(const BusinessConnection* bc);
     void optimize_purchase(std::vector<FloatType>& demand_requests_D_p, OptimizerData& data_p);
 
   public:
