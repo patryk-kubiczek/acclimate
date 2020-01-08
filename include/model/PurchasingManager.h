@@ -44,25 +44,8 @@ struct OptimizerData {
 };
 
 class PurchasingManager {
-  protected:
+  private:
     Demand demand_D_ = Demand(0.0);
-
-  public:
-    Storage* const storage;
-    std::vector<std::shared_ptr<BusinessConnection>> business_connections;
-
-    const Demand& demand_D(const EconomicAgent* const caller = nullptr) const;
-    explicit PurchasingManager(Storage* storage_p);
-    ~PurchasingManager();
-    FlowQuantity get_flow_deficit() const;
-    Flow get_transport_flow() const;
-    Flow get_sum_of_last_shipments() const;
-    void iterate_consumption_and_production();
-    bool remove_business_connection(const BusinessConnection* business_connection);
-    Model* model() const;
-    std::string id() const;
-
-  protected:
     FloatType optimized_value_ = 0.0;
     Demand purchase_ = Demand(0.0);
     FlowQuantity desired_purchase_ = FlowQuantity(0.0);
@@ -70,17 +53,8 @@ class PurchasingManager {
     FlowValue total_transport_penalty_ = FlowValue(0.0);
 
   public:
-    FloatType optimized_value() const;
-    Demand storage_demand() const;
-    const Demand& purchase() const;
-    const FlowValue& expected_costs(const EconomicAgent* const caller = nullptr) const;
-    const FlowValue& total_transport_penalty() const;
-    void calc_optimization_parameters(std::vector<FloatType>& demand_requests_D_p,
-                                      std::vector<BusinessConnection*>& zero_connections_p,
-                                      OptimizerData& data_p) const;
-    void iterate_purchase();
-    void add_initial_demand_D_star(const Demand& demand_D_p);
-    void subtract_initial_demand_D_star(const Demand& demand_D_p);
+    Storage* const storage;
+    std::vector<std::shared_ptr<BusinessConnection>> business_connections;
 
   private:
     FloatType purchase_constraint(const FloatType x[], FloatType grad[], const OptimizerData* data) const;
@@ -106,11 +80,32 @@ class PurchasingManager {
     FloatType partial_D_r_transport_penalty(FloatType D_r, const BusinessConnection* business_connection) const;
     static FlowQuantity calc_analytical_approximation_X_max(const BusinessConnection* bc);
     void optimize_purchase(std::vector<FloatType>& demand_requests_D_p, OptimizerData& data_p);
+    void print_distribution(const FloatType demand_requests_D_p[], const OptimizerData* data, bool connection_details) const;
 
   public:
+    explicit PurchasingManager(Storage* storage_p);
+    ~PurchasingManager();
+    const Demand& demand_D(const EconomicAgent* const caller = nullptr) const;
+    FlowQuantity get_flow_deficit() const;
+    Flow get_transport_flow() const;
+    Flow get_sum_of_last_shipments() const;
+    void iterate_consumption_and_production();
+    bool remove_business_connection(const BusinessConnection* business_connection);
+    FloatType optimized_value() const;
+    Demand storage_demand() const;
+    const Demand& purchase() const;
+    const FlowValue& expected_costs(const EconomicAgent* const caller = nullptr) const;
+    const FlowValue& total_transport_penalty() const;
+    void calc_optimization_parameters(std::vector<FloatType>& demand_requests_D_p,
+                                      std::vector<BusinessConnection*>& zero_connections_p,
+                                      OptimizerData& data_p) const;
+    void iterate_purchase();
+    void add_initial_demand_D_star(const Demand& demand_D_p);
+    void subtract_initial_demand_D_star(const Demand& demand_D_p);
+    Model* model() const;
+    std::string id() const;
     // DEBUG
     void print_details() const;
-    void print_distribution(const FloatType demand_requests_D_p[], const OptimizerData* data, bool connection_details) const;
 };
 }  // namespace acclimate
 

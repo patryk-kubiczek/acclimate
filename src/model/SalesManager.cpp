@@ -52,15 +52,6 @@ void SalesManager::subtract_initial_demand_request_D_star(const Demand& initial_
     sum_demand_requests_D_ -= initial_demand_request_D_star;
 }
 
-const Flow SalesManager::get_transport_flow() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    Flow res = Flow(0.0);
-    for (const auto& bc : business_connections) {
-        res += bc->get_transport_flow();
-    }
-    return res;
-}
-
 bool SalesManager::remove_business_connection(BusinessConnection* business_connection) {
     auto it = std::find_if(business_connections.begin(), business_connections.end(),
                            [business_connection](const std::shared_ptr<BusinessConnection>& it) { return it.get() == business_connection; });

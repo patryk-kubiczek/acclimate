@@ -44,6 +44,19 @@ class Region;
 class Model {
     friend class Run;
 
+  private:
+    Time time_ = Time(0.0);
+    Time start_time_ = Time(0.0);
+    Time stop_time_ = Time(0.0);
+    TimeStep timestep_ = 0;
+    Time delta_t_ = Time(1.0);
+    unsigned char current_register_ = 1;
+    Parameters::ModelParameters parameters_;
+    bool no_self_supply_ = false;
+    std::vector<std::pair<PurchasingManager*, std::size_t>> purchasing_managers;
+    std::vector<std::pair<EconomicAgent*, std::size_t>> economic_agents;
+    Run* const run_m;
+
   public:
     std::vector<std::unique_ptr<Sector>> sectors;
     std::vector<std::unique_ptr<Region>> regions;
@@ -51,54 +64,27 @@ class Model {
     Sector* const consumption_sector;
 
   private:
-    Time time_ = Time(0.0);
-    TimeStep timestep_ = 0;
-    unsigned char current_register_ = 1;
-    Time delta_t_ = Time(1.0);
-    Parameters::ModelParameters parameters_;
-    bool no_self_supply_ = false;
-    std::vector<std::pair<PurchasingManager*, std::size_t>> purchasing_managers;
-    std::vector<std::pair<EconomicAgent*, std::size_t>> economic_agents;
-    Run* const run_m;
-
-    Model* model() { return this; }
-
-  protected:
     explicit Model(Run* run_p);
-    Time start_time_ = Time(0.0);
-    Time stop_time_ = Time(0.0);
+    Model* model() { return this; }
 
   public:
     const Time& time() const { return time_; }
-
-    const TimeStep& timestep() const { return timestep_; }
-
     const Time& start_time() const { return start_time_; };
-
     const Time& stop_time() const { return stop_time_; };
-
+    const TimeStep& timestep() const { return timestep_; }
+    const Time& delta_t() const { return delta_t_; }
     bool done() const { return time() > stop_time(); };
     void switch_registers();
     void tick();
-
-    const Time& delta_t() const { return delta_t_; }
-
-    void delta_t(const Time& delta_t_p);
-
     const bool& no_self_supply() const { return no_self_supply_; }
-
-    void start_time(const Time& start_time);
-    void stop_time(const Time& stop_time);
+    void set_start_time(const Time& start_time);
+    void set_stop_time(const Time& stop_time);
+    void set_delta_t(const Time& delta_t_p);
     void no_self_supply(bool no_self_supply_p);
-
     const unsigned char& current_register() const { return current_register_; }
-
     unsigned char other_register() const { return 1 - current_register_; }
-
     const Parameters::ModelParameters& parameters() const { return parameters_; }
-
     Parameters::ModelParameters& parameters_writable();
-
     Region* add_region(std::string name);
     Sector* add_sector(std::string name,
                        const Ratio& upper_storage_limit_omega_p,
@@ -116,9 +102,7 @@ class Model {
     static Consumer* find_consumer(Region* region);
     Consumer* find_consumer(const std::string& region_name) const;
     GeoLocation* find_location(const std::string& name) const;
-
     Run* run() const { return run_m; }
-
     static std::string id() { return "MODEL"; }
 };
 }  // namespace acclimate
