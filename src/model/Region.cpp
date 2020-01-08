@@ -95,18 +95,6 @@ const GeoRoute& Region::find_path_to(Region* region, typename Sector::TransportT
     return it->second;
 }
 
-inline Region* Region::as_region() { return this; }
-
-inline const Region* Region::as_region() const { return this; }
-
-void Region::remove_economic_agent(EconomicAgent* economic_agent) {
-    economic_agents_lock.call([&]() {
-        auto it = std::find_if(economic_agents.begin(), economic_agents.end(),
-                               [economic_agent](const std::unique_ptr<EconomicAgent>& it) { return it.get() == economic_agent; });
-        economic_agents.erase(it);
-    });
-}
-
 const Flow& Region::consumption_C() const {
     assertstepnot(CONSUMPTION_AND_PRODUCTION);
     return consumption_flow_Y_[model()->current_register()];

@@ -114,7 +114,6 @@ class ModelInitializer {
     Firm* add_firm(Sector* sector, Region* region);
     Consumer* add_consumer(Region* region);
     void create_simple_transport_connection(Region* region_from, Region* region_to, TransportDelay transport_delay);
-    void initialize_connection(Sector* sector_from, Region* region_from, Sector* sector_to, Region* region_to, const Flow& flow);
     void initialize_connection(Firm* firm_from, EconomicAgent* economic_agent_to, const Flow& flow);
     void clean_network();
     void pre_initialize();
@@ -134,7 +133,7 @@ class ModelInitializer {
 
     inline Model* model() const { return model_m; }
 
-    inline std::string id() const { return "MODELINITIALIZER"; }
+    static inline std::string id() { return "MODELINITIALIZER"; }
 };
 }  // namespace acclimate
 

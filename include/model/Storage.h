@@ -64,8 +64,6 @@ class Storage {
         return initial_input_flow_I_star_;  // == initial_used_flow_U_star
     }
 
-    const Forcing& forcing_mu() const { return forcing_mu_; }
-
   private:
     void calc_content_S();
 
@@ -84,7 +82,6 @@ class Storage {
     const Flow& last_input_flow_I() const;
     const Flow& next_input_flow_I() const;
     Ratio get_technology_coefficient_a() const;
-    Ratio get_input_share_u() const;
     void add_initial_flow_Z_star(const Flow& flow_Z_star);
     bool subtract_initial_flow_Z_star(const Flow& flow_Z_star);
     void iterate_consumption_and_production();

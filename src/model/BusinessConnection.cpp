@@ -166,28 +166,6 @@ Flow BusinessConnection::get_transport_flow() const {
     return round(res);
 }
 
-Flow BusinessConnection::get_disequilibrium() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    TransportChainLink* link = first_transport_link.get();
-    Flow res = Flow(0.0);
-    while (link) {
-        res.add_possibly_negative(link->get_disequilibrium());
-        link = link->next_transport_chain_link.get();
-    }
-    return round(res, true);
-}
-
-FloatType BusinessConnection::get_stddeviation() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    TransportChainLink* link = first_transport_link.get();
-    FloatType res = 0.0;
-    while (link) {
-        res += link->get_stddeviation();
-        link = link->next_transport_chain_link.get();
-    }
-    return res;
-}
-
 Model* BusinessConnection::model() const { return buyer->model(); }
 
 std::string BusinessConnection::id() const { return (seller ? seller->id() : "INVALID") + "->" + (buyer ? buyer->storage->economic_agent->id() : "INVALID"); }
@@ -223,11 +201,6 @@ const Demand& BusinessConnection::last_demand_request_D(const PurchasingManager*
         UNUSED(caller);
     }
     return last_demand_request_D_;
-}
-
-void BusinessConnection::initial_flow_Z_star(const Flow& new_initial_flow_Z_star) {
-    assertstep(INVESTMENT);
-    initial_flow_Z_star_ = new_initial_flow_Z_star;
 }
 
 }  // namespace acclimate

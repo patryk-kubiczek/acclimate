@@ -62,8 +62,6 @@ class TransportChainLink {
     inline TransportDelay transport_delay() const { return transport_queue.size(); }
 
     Flow get_total_flow() const;
-    Flow get_disequilibrium() const;
-    FloatType get_stddeviation() const;
     FloatType get_passage() const;
     FlowQuantity get_flow_deficit() const;
 

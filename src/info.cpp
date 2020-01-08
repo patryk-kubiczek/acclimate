@@ -18,6 +18,8 @@
   along with Acclimate.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "info.h"
+
 #include "version.h"
 
 #define STR_HELPER(x) #x

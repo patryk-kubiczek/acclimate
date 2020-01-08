@@ -35,7 +35,6 @@ template<typename T>
 class RasteredData {
   protected:
     std::unique_ptr<T[]> data;
-    unsigned int time_step = 0;
     FloatType x_min = 0;
     FloatType x_max = 0;
     FloatType x_gridsize = 0;

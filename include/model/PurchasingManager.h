@@ -40,7 +40,6 @@ struct OptimizerData {
     std::vector<BusinessConnection*> business_connections;
     std::vector<FloatType> upper_bounds;
     std::vector<FloatType> lower_bounds;
-    FloatType last_upper_bound = 0;
     FlowQuantity transport_flow_deficit = FlowQuantity(0.0);
 };
 
@@ -57,12 +56,9 @@ class PurchasingManager {
     ~PurchasingManager();
     FlowQuantity get_flow_deficit() const;
     Flow get_transport_flow() const;
-    Flow get_disequilibrium() const;
-    FloatType get_stddeviation() const;
     Flow get_sum_of_last_shipments() const;
     void iterate_consumption_and_production();
     bool remove_business_connection(const BusinessConnection* business_connection);
-    const Demand& initial_demand_D_star() const;
     Model* model() const;
     std::string id() const;
 
@@ -96,7 +92,6 @@ class PurchasingManager {
     inline FloatType unscaled_objective(FloatType x) const;
     inline FloatType partial_objective_scaled_objective() const;
     inline FloatType scaled_use(FloatType use) const;
-    inline FloatType unscaled_use(FloatType x) const;
     inline FloatType partial_use_scaled_use() const;
     void calc_desired_purchase(const OptimizerData* data);
     FloatType n_r(FloatType D_r, const BusinessConnection* business_connection) const;

@@ -104,24 +104,6 @@ Flow TransportChainLink::get_total_flow() const {
     return res + overflow;
 }
 
-Flow TransportChainLink::get_disequilibrium() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    Flow res = Flow(0.0);
-    for (const auto& f : transport_queue) {
-        res.add_possibly_negative(absdiff(f.current, f.initial));
-    }
-    return res;
-}
-
-FloatType TransportChainLink::get_stddeviation() const {
-    assertstepnot(CONSUMPTION_AND_PRODUCTION);
-    FloatType res = 0.0;
-    for (const auto& f : transport_queue) {
-        res += to_float((absdiff(f.current, f.initial)).get_quantity()) * to_float((absdiff(f.current, f.initial)).get_quantity());
-    }
-    return res;
-}
-
 FlowQuantity TransportChainLink::get_flow_deficit() const {
     assertstepnot(CONSUMPTION_AND_PRODUCTION);
     FlowQuantity res = FlowQuantity(0.0);

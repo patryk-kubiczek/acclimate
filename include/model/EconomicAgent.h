@@ -67,7 +67,6 @@ class EconomicAgent {
     virtual Firm* as_firm();
     virtual const Firm* as_firm() const;
     virtual Consumer* as_consumer();
-    virtual const Consumer* as_consumer() const;
 
     inline bool is_firm() const { return type == Type::FIRM; }
     inline bool is_consumer() const { return type == Type::CONSUMER; }
